@@ -16,77 +16,114 @@
         <div class="content">
             <div class="code-container">                
                 <div class="line-numbers"></div>
-                <textarea id="codeArea" class="custom-textarea" placeholder="금액을 한줄씩 구분하여 입력하세요" spellcheck="false"></textarea>
-                <!-- <button type="button" id="translation" class="custom-button">변환</button>         -->
+                <textarea id="codeArea" class="custom-textarea" placeholder="금액을 한줄씩 구분하여 입력하세요" spellcheck="false"></textarea>                
 
                 <div id="button-run" class="button-run"></div>                                              
             </div>
             <div class="result-container">
-                결과 컨테이너
-            </div>
-
-            
+                <div class="result-top"></div>
+                <div class="result-down"></div>
+            </div>            
         </div>
         <div class="footer">
             <p>Copyright © bug41 All rights reserved</p>
         </div>        
     </div>    
 
-    <script>
-        
-        var btn = document.getElementById("button-run");
-        btn.addEventListener("click", function(){
-            console.log("클릭");
-        });        
-        
-
+    <script src="./assets/js/num_kr.js"></script>
+    <script>        
         const codeArea = document.getElementById("codeArea");
         const lineNumbers = document.querySelector(".line-numbers");
+        const resultTop = document.querySelector(".result-top");
+        const resultDown = document.querySelector(".result-down");
 
-        // 텍스트 내용
-        const codeText = `function sayHello() {
-            console.log("안녕하세요!");
-        }
+        //라인, textarea 스크롤 싱크 맞추기
+        lineNumbers.addEventListener('scroll', function() {
+            codeArea.scrollTop = lineNumbers.scrollTop;
+        });
 
-        for (let i = 0; i < 5; i++) {
-            sayHello();
-            for (let i = 0; i < 5; i++) {
-            sayHello();
-            for (let i = 0; i < 5; i++) {
-            sayHello();
-        }`;
+        codeArea.addEventListener('scroll', function() {
+            lineNumbers.scrollTop = codeArea.scrollTop;
+        });
 
-        // 텍스트를 행 번호와 함께 변환
+        // 샘플 텍스트 내용
+        const codeText = `1원
+80,270원
+111,111원
+1,234,567,890원
+100,000,000,000,000원`;
+
+        // 텍스트 행 번호 함께 변환
         function addLineNumbers(text) {
             const lines = text.split('\n');
-            const lineNumberedText = lines.map((line, index) => {
-                const lineNumber = index + 1;
+            var html = '<ul>';
 
-                return lineNumber < 10 ? `&nbsp;${lineNumber}` : `${lineNumber}`;
-                 //`${lineNumber}`;
+            lines.map((line, index) => {
+                const lineNumber = index + 1;
+                var number = lineNumber < 10 ? `&nbsp;${lineNumber}` : `${lineNumber}`;
+                html += '<li>'+number+'</li>';                 
             });
-            return lineNumberedText.join('<br>');
+
+            html+= '</ul>';
+            return html;            
         }
 
-        // 행 번호를 추가한 텍스트를 textarea와 line-numbers 요소에 설정
-        codeArea.value = codeText;
-        lineNumbers.innerHTML = addLineNumbers(codeText);
+        //textarea 에 입력된 데이터 배열로 가공
+        function addLineToArray(text){
+            //console.log(text);
+            const lines = text.split('\n');
+            let lineArray = [];
+            lines.map((line, index) => {
 
-        
+                //숫자만 추출
+                const onlyNumber = line.replace(/[^0-9]/g, "");
+
+                //원이 없을경우 알아서 추가
+                if(line.slice(-1) != '원'){
+                    line = line +'원';
+                }
+
+                //콤마 잘못 찍혔을경우 강제로 재정의
+                if(line.slice(0, -1) != parseInt(onlyNumber).toLocaleString()){
+                    console.log("다른경우 " + line.slice(0, -1) + ' ' +  onlyNumber.toLocaleString())
+                    line = parseInt(onlyNumber).toLocaleString();
+                }
+
+                lineArray.push(line);
+            });
+
+            return lineArray;
+
+        }
+
+        codeArea.value = codeText;
+        lineNumbers.innerHTML = addLineNumbers(codeText);        
 
         codeArea.addEventListener("keyup", function(event) {
             lineNumbers.innerHTML = addLineNumbers(codeArea.value);
-            
-            if (event.key === "Enter") {
-                // 엔터 키가 눌렸을 때 실행할 동작
-                //event.preventDefault(); // 기본 엔터 동작을 막음
-                console.log("엔터 키가 눌렸습니다.");
-                // 여기에 추가적인 동작을 추가할 수 있습니다.
-            }
         });
+        
+        
+        var btn = document.getElementById("button-run");
+        btn.addEventListener("click", function(){
 
+            resultTop.innerHTML = '';
+            
+            const insertDataArray = addLineToArray(codeArea.value);
+
+            insertDataArray.forEach(number => {
+                //console.log(`${number}원: ${numberToKorean(number)}`);
+                const p_tag = document.createElement('p');
+                p_tag.textContent = numberToKorean(number);
+                resultTop.append(p_tag);
+            });
+
+            //const koreanAmount = numberToKorean(insertDataArray);
+
+            
+        });
     </script>
-
-    <script src="/assets/js/index.js"></script>
+    
+    
 </body>
 </html>
