@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사이냅소프트 채용퀴즈</title>    
+    <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./assets/css/code.css"> -->
+</head>    
+<body>
+    <div class="container">
+        <!-- <div class="header">
+            <p>사이냅소프트 채용퀴즈</p>
+        </div> -->
+        <div class="content">
+            <div class="code-container">                
+                <div class="line-numbers"></div>
+                <textarea id="codeArea" class="custom-textarea" placeholder="금액을 한줄씩 구분하여 입력하세요" spellcheck="false"></textarea>
+                <!-- <button type="button" id="translation" class="custom-button">변환</button>         -->
+
+                <div id="button-run" class="button-run"></div>                                              
+            </div>
+            <div class="result-container">
+                결과 컨테이너
+            </div>
+
+            
+        </div>
+        <div class="footer">
+            <p>Copyright © bug41 All rights reserved</p>
+        </div>        
+    </div>    
+
+    <script>
+        
+        var btn = document.getElementById("button-run");
+        btn.addEventListener("click", function(){
+            console.log("클릭");
+        });        
+        
+
+        const codeArea = document.getElementById("codeArea");
+        const lineNumbers = document.querySelector(".line-numbers");
+
+        // 텍스트 내용
+        const codeText = `function sayHello() {
+            console.log("안녕하세요!");
+        }
+
+        for (let i = 0; i < 5; i++) {
+            sayHello();
+            for (let i = 0; i < 5; i++) {
+            sayHello();
+            for (let i = 0; i < 5; i++) {
+            sayHello();
+        }`;
+
+        // 텍스트를 행 번호와 함께 변환
+        function addLineNumbers(text) {
+            const lines = text.split('\n');
+            const lineNumberedText = lines.map((line, index) => {
+                const lineNumber = index + 1;
+
+                return lineNumber < 10 ? `&nbsp;${lineNumber}` : `${lineNumber}`;
+                 //`${lineNumber}`;
+            });
+            return lineNumberedText.join('<br>');
+        }
+
+        // 행 번호를 추가한 텍스트를 textarea와 line-numbers 요소에 설정
+        codeArea.value = codeText;
+        lineNumbers.innerHTML = addLineNumbers(codeText);
+
+        
+
+        codeArea.addEventListener("keyup", function(event) {
+            lineNumbers.innerHTML = addLineNumbers(codeArea.value);
+            
+            if (event.key === "Enter") {
+                // 엔터 키가 눌렸을 때 실행할 동작
+                //event.preventDefault(); // 기본 엔터 동작을 막음
+                console.log("엔터 키가 눌렸습니다.");
+                // 여기에 추가적인 동작을 추가할 수 있습니다.
+            }
+        });
+
+    </script>
+
+    <script src="/assets/js/index.js"></script>
+</body>
+</html>

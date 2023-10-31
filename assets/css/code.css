@@ -1,0 +1,19 @@
+.code-container {
+    display: flex;
+}
+
+.line-numbers {
+    width: 30px; /* 행 번호 컨테이너의 너비 조정 */
+    padding: 10px;
+    background-color: #f0f0f0; /* 배경색 지정 */
+    border-right: 1px solid #ddd; /* 행 번호 컨테이너에 경계선 추가 */
+    box-sizing: border-box; /* 경계선을 포함한 너비 계산 */
+    overflow: hidden; /* 스크롤바 숨김 */
+}
+
+#codeArea {
+    flex: 1; /* textarea가 남은 공간을 모두 차지하도록 함 */
+    padding: 10px;
+    border: none;
+    resize: none;
+}

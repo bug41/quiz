@@ -1,0 +1,123 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+}
+
+.header{
+    width:100%;
+    height:100px;     
+    align-items: center; 
+    border-bottom:1px solid black;
+}
+
+.content{
+    width:100%;
+    height:800px;    
+    display: flex;
+}
+
+/* code 부분 */
+.code-container{
+    display: flex;    
+    width:100%;
+    height:100%;
+    margin:auto;
+    position:relative;
+    background-color: #1f1f1f;
+}
+
+.button-run{
+    position: absolute;
+    right:10px;
+    bottom:10px; 
+    width: 40px;
+    height: 40px;
+    border:1px solid yellow;
+    border-radius: 50%;    
+    background: black;
+    cursor:pointer;
+}
+
+.button-run::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  z-index: 10;
+  display: block;
+  width: 20px;
+  height: 20px;
+  /*1f1f1f*/
+  border-top: 5px solid yellow;
+  border-left: 5px solid yellow;
+}
+
+.button-run::after {
+  top: 9px;  
+  transform: rotate(135deg);
+}
+
+
+/* code 부분 */
+.result-container{        
+    width:100%;
+    height:100%;
+    margin:auto;
+    background-color: white;
+}
+
+.footer{
+    width:100%;
+    height:80px;    
+    text-align: center;
+}
+
+p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* textarea */
+.custom-textarea {
+    width: 600px;
+    padding: 10px;
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #1f1f1f;
+    color: #7cdcfe;    
+    resize: none;
+    outline: none;
+}
+
+.custom-textarea::placeholder {
+    color: #999;
+}
+
+.custom-textarea:hover,
+.custom-textarea:focus {
+    border-color: #ff5733;
+}
+
+.line-numbers {
+    width: 30px; /* 행 번호 컨테이너의 너비 조정 */
+    padding: 10px;    
+    line-height: 1.125;
+    text-align:right;
+    color:#6e7681;
+    border-right: 1px solid #ddd; /* 행 번호 컨테이너에 경계선 추가 */
+    box-sizing: border-box; /* 경계선을 포함한 너비 계산 */
+    overflow: hidden; /* 스크롤바 숨김 */
+}
+
+#codeArea {
+    flex: 1; /* textarea가 남은 공간을 모두 차지하도록 함 */
+    padding: 10px;
+    border: none;
+    resize: none;
+}
