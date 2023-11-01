@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사이냅소프트 채용퀴즈</title>    
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/index.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
     <!-- <link rel="stylesheet" type="text/css" href="./assets/css/code.css"> -->
 </head>    
@@ -16,13 +17,12 @@
         <div class="content">
             <div class="code-container">                
                 <div class="line-numbers"></div>
-                <textarea id="codeArea" class="custom-textarea" placeholder="금액을 한줄씩 구분하여 입력하세요" spellcheck="false"></textarea>                
-
+                <textarea id="codeArea" class="custom-textarea scrollbar" placeholder="금액을 한줄씩 구분하여 입력하세요" spellcheck="false"></textarea>
                 <div id="button-run" class="button-run"></div>                                              
             </div>
             <div class="result-container">
-                <div class="result-top"></div>
-                <div class="result-down"></div>
+                <div class="result-top scrollbar"></div>
+                <div class="result-down scrollbar"></div>
             </div>            
         </div>
         <div class="footer">
@@ -47,14 +47,11 @@
         });
 
         // 샘플 텍스트 내용
-//        const codeText = `1원
-//80,270원
-//111,111원
-//1,234,567,890원
-//100,000,000,000,000원`;
-
-        //const codeText = `80,270원`;
-        const codeText = `11,310,911,275원`;
+        const codeText = `1원
+80,270원
+111,111원
+1,234,567,890원
+100,000,000,000,000원`;
 
         // 텍스트 행 번호 함께 변환
         function addLineNumbers(text) {
