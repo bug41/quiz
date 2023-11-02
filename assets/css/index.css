@@ -1,5 +1,5 @@
 html,body{
-    font-family: Consolas,monaco,monospace; 
+    font-family: Consolas,monaco,monospace;     
 }
 
 .container {
@@ -7,20 +7,21 @@ html,body{
     flex-direction: column;
     justify-content: center; 
     align-items: center; 
-    height: 100vh; 
+    height: 100vh;
 }
 
 .header{
     width:100%;
-    height:100px;     
+    height:100px;
     align-items: center; 
     border-bottom:1px solid black;
 }
 
 .content{
     width:100%;
-    height:800px;    
     display: flex;
+    height: calc(100vh - 50px);
+    background:red;
 }
 
 .footer{    
@@ -45,7 +46,7 @@ html,body{
 /* 스크롤 바 css */
 .scrollbar::-webkit-scrollbar {
     width: 10px;
-}
+} 
 
 .scrollbar::-webkit-scrollbar-thumb {
     background: #888;
