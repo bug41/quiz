@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +14,8 @@
         <!-- <div class="header">
             <p>사이냅소프트 채용퀴즈</p>
         </div> -->
-        <div class="content">
-            <div class="code-container">                
+        <div class="content">            
+            <div class="code-container">
                 <div class="line-numbers"></div>
                 <textarea id="codeArea" class="custom-textarea scrollbar" placeholder="금액을 한줄씩 구분하여 입력하세요" spellcheck="false"></textarea>
                 <div id="button-run" class="button-run"></div>                                              
@@ -31,6 +31,7 @@
     </div>    
 
     <script src="./assets/js/num_kr.js"></script>
+    <script src="./assets/js/data.js"></script>
     <script>        
         const codeArea = document.getElementById("codeArea");
         const lineNumbers = document.querySelector(".line-numbers");
@@ -45,13 +46,6 @@
         codeArea.addEventListener('scroll', function() {
             lineNumbers.scrollTop = codeArea.scrollTop;
         });
-
-        // 샘플 텍스트 내용
-        const codeText = `1원
-80,270원
-111,111원
-1,234,567,890원
-100,000,000,000,000원`;
 
         // 텍스트 행 번호 함께 변환
         function addLineNumbers(text) {
@@ -101,31 +95,57 @@
 
         codeArea.addEventListener("keyup", function(event) {
             lineNumbers.innerHTML = addLineNumbers(codeArea.value);
-        });
-        
+        });        
         
         var btn = document.getElementById("button-run");
         btn.addEventListener("click", function(){
 
             resultTop.innerHTML = '';
-            
+            resultDown.innerHTML = '';
+
             const insertDataArray = addLineToArray(codeArea.value);
 
-            insertDataArray.forEach(number => {               
-                const p_tag = document.createElement('p');
+            let sum = 0;
+            insertDataArray.forEach(number => {
+                const resultTop_p = document.createElement('p');
+                const resultDown_p = document.createElement('p');
+                
                 let text = numberToKorean(number);
                 
                 if(text.indexOf('||') != -1){
                     arr = text.split('||');
-                    p_tag.textContent = arr[1];
+                    resultTop_p.textContent = arr[1];
                 }else{
                     if(text != ""){ 
                         text += '원';
-                        p_tag.textContent = text.replace(' 원', '원');                
-                    }                
+                        const result = text.replace(' 원', '원');
+                        resultTop_p.textContent = result;
+                        
+                        if(result.length > 1){
+                            let wordSegment, hangulCount;
+
+                            // 2어절 이상일때
+                            if(result.indexOf(' ') != -1){
+                                let resultArr = result.split(' ');                                
+                                wordSegment = resultArr.length;
+                                hangulCount = resultArr.join('').length; 
+                            }else{// 1어절 일때                                
+                                wordSegment = 1;
+                                hangulCount = result.length;
+                            }                            
+
+                            resultDown_p.textContent = wordSegment * hangulCount;
+
+                            sum += wordSegment * hangulCount;
+                        }
+                    }
                 }                
-                resultTop.append(p_tag);
+                resultTop.append(resultTop_p);
+                resultDown.append(resultDown_p);
             });
+
+            let totalHtml = " 전체 합 : " + sum;
+            resultDown.append(totalHtml);
         });
     </script>
 </body>

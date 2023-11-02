@@ -45,14 +45,14 @@ function numberToKorean(number) {
     //앞뒤에 같은단위가 있으면 뒤에것만 남겨주고 앞에껄 빼야함
     const wonArr = koreanParts.reverse();
 
-    console.log("wonArr : " + wonArr);
+    //console.log("wonArr : " + wonArr);
 
     if(wonArr.join('') == '일만'){
         return wonArr.join('').substr(1);
     }
 
     //조 단위
-    trillion = wonArr.filter(item => item.endsWith('조'));
+    const trillion = wonArr.filter(item => item.endsWith('조'));
     let trillionResult = [];    
     for (let index = 0; index < trillion.length; index++) {
         const number = trillion[index];
@@ -65,11 +65,6 @@ function numberToKorean(number) {
         if(price != ''){
             trillionResult.push(price);
         }
-        
-        //trillionResult.push(price);
-        //if (index + 1 === trillion.length) {
-        //    trillionResult.push('조 ');
-        //}
     };
 
     if(trillionResult.length > 0){
@@ -78,11 +73,10 @@ function numberToKorean(number) {
 
     console.log('trillionResult :' + trillionResult)
 
-
     let filteredWonArr = wonArr.filter(item => !item.endsWith('조'));
 
     // 억 단위
-    hundredMillion = filteredWonArr.filter(item => item.endsWith('억'));
+    const hundredMillion = filteredWonArr.filter(item => item.endsWith('억'));
     let hundredMillionResult = [];
     for (let index = 0; index < hundredMillion.length; index++) {
         const number = hundredMillion[index];
@@ -116,7 +110,7 @@ function numberToKorean(number) {
     let filteredWonArr1 = filteredWonArr.filter(item => !item.endsWith('억'));
 
     // 만 단위
-    tenThousand = filteredWonArr1.filter(item => item.endsWith('만'));
+    const tenThousand = filteredWonArr1.filter(item => item.endsWith('만'));
 
     //console.log("111,111 원에서 노출 "  + tenThousand)
     //console.log("tenThousand : " + tenThousand);
@@ -150,10 +144,6 @@ function numberToKorean(number) {
     // 천 이하 단위
     const filteredWonArr2 = filteredWonArr1.filter(item => !item.endsWith('만'));
 
-    //console.log("###############")
-    //console.log(filteredWonArr2);
-    //console.log("###############")
-        
     const filteredWonArr3 = filteredWonArr2.map(item => {
         if (item.endsWith('일천') || item.endsWith('일백') || item.endsWith('일십')) {
             return item.substr(1);        }
@@ -161,9 +151,6 @@ function numberToKorean(number) {
     });
 
     console.log('========== for end =========== :::::::::: ' + wonArr)
-
-    console.log(filteredWonArr3);
     
     return trillionResult.join('') + hundredMillionResult.join('') + tenThousandResult.join('') + filteredWonArr3.join('') ;
-    //return wonArr.join('');
 }
