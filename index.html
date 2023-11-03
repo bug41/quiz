@@ -20,10 +20,11 @@
                 <textarea id="codeArea" class="custom-textarea scrollbar" placeholder="금액을 한줄씩 구분하여 입력하세요" spellcheck="false"></textarea>
                 <div id="button-run" class="button-run"></div>                                              
             </div>
-            <div class="result-container">
-                <div class="result-top scrollbar"></div>
-                <div class="result-down scrollbar"></div>
+            <div class="translate-container scrollbar">                
             </div>            
+            <div class="result-container">                
+                <!-- <div class="result-down scrollbar"></div> -->
+            </div>
         </div>
         <div class="footer">
             <p>Copyright © bug41 All rights reserved</p>
@@ -35,8 +36,8 @@
     <script>        
         const codeArea = document.getElementById("codeArea");
         const lineNumbers = document.querySelector(".line-numbers");
-        const resultTop = document.querySelector(".result-top");
-        const resultDown = document.querySelector(".result-down");
+        const translateContainer = document.querySelector(".translate-container");
+        const resultContainer = document.querySelector(".result-container");
 
         //라인, textarea 스크롤 싱크 맞추기
         lineNumbers.addEventListener('scroll', function() {
@@ -100,26 +101,26 @@
         var btn = document.getElementById("button-run");
         btn.addEventListener("click", function(){
 
-            resultTop.innerHTML = '';
-            resultDown.innerHTML = '';
+            translateContainer.innerHTML = '';
+            //resultContainer.innerHTML = '';
 
             const insertDataArray = addLineToArray(codeArea.value);
 
             let sum = 0;
             insertDataArray.forEach(number => {
-                const resultTop_p = document.createElement('p');
-                const resultDown_p = document.createElement('p');
+                const translate_p = document.createElement('p');
+                const resultContainer_p = document.createElement('p');
                 
                 let text = numberToKorean(number);
                 
                 if(text.indexOf('||') != -1){
                     arr = text.split('||');
-                    resultTop_p.textContent = arr[1];
+                    translate_p.textContent = arr[1];
                 }else{
                     if(text != ""){ 
                         text += '원';
                         const result = text.replace(' 원', '원');
-                        resultTop_p.textContent = result;
+                        translate_p.textContent = result;
                         
                         if(result.length > 1){
                             let wordSegment, hangulCount;
@@ -134,18 +135,18 @@
                                 hangulCount = result.length;
                             }                            
 
-                            resultDown_p.textContent = wordSegment * hangulCount;
+                            resultContainer_p.textContent = wordSegment + ' * ' + hangulCount + ' = ' + wordSegment * hangulCount;
 
                             sum += wordSegment * hangulCount;
                         }
                     }
                 }                
-                resultTop.append(resultTop_p);
-                resultDown.append(resultDown_p);
+                translateContainer.append(translate_p);
+                resultContainer.append(resultContainer_p);
             });
 
             let totalHtml = " 전체 합 : " + sum;
-            resultDown.append(totalHtml);
+            resultContainer.append(totalHtml);
         });
     </script>
 </body>

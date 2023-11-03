@@ -20,8 +20,7 @@ html,body{
 .content{
     width:100%;
     display: flex;
-    height: calc(100vh - 50px);
-    background:red;
+    height: calc(100vh - 50px);    
 }
 
 .footer{    
