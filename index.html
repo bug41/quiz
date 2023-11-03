@@ -102,7 +102,7 @@
         btn.addEventListener("click", function(){
 
             translateContainer.innerHTML = '';
-            //resultContainer.innerHTML = '';
+            resultContainer.innerHTML = '';
 
             const insertDataArray = addLineToArray(codeArea.value);
 
@@ -111,7 +111,7 @@
                 const translate_p = document.createElement('p');
                 const resultContainer_p = document.createElement('p');
                 
-                let text = numberToKorean(number);
+                let text = numToKor(number);
                 
                 if(text.indexOf('||') != -1){
                     arr = text.split('||');
